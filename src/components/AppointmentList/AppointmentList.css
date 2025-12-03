@@ -1,0 +1,43 @@
+.appointment-list {
+  display: grid;
+  gap: var(--spacing-md);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .appointment-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .appointment-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.empty-state {
+  text-align: center;
+  padding: var(--spacing-2xl);
+  color: var(--color-text-muted);
+  background-color: var(--color-bg-card);
+  border-radius: var(--radius-lg);
+  border: 2px dashed rgba(255, 255, 255, 0.1);
+}
+
+.empty-state svg {
+  width: 64px;
+  height: 64px;
+  margin-bottom: var(--spacing-md);
+  opacity: 0.5;
+}
+
+.empty-state h3 {
+  font-size: 1.25rem;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.empty-state p {
+  font-size: 0.9rem;
+}
