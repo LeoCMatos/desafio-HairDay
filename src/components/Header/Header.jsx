@@ -1,10 +1,12 @@
 import './Header.css'
 
-function Header({ title, subtitle }) {
+function Header() {
   return (
     <header className="header">
       <div className="header-content">
+        <span className="header-label">Projeto</span>
         <div className="header-logo">
+          <span className="header-title">HairDay</span>
           <svg
             className="header-icon"
             viewBox="0 0 24 24"
@@ -18,9 +20,7 @@ function Header({ title, subtitle }) {
             <line x1="14.47" y1="14.48" x2="20" y2="20"/>
             <line x1="8.12" y1="8.12" x2="12" y2="12"/>
           </svg>
-          <h1 className="header-title">{title}</h1>
         </div>
-        {subtitle && <p className="header-subtitle">{subtitle}</p>}
       </div>
     </header>
   )

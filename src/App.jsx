@@ -1,14 +1,13 @@
 import { useState } from 'react'
 import Header from './components/Header/Header'
-import AppointmentForm from './components/AppointmentForm/AppointmentForm'
-import AppointmentList from './components/AppointmentList/AppointmentList'
+import BookingForm from './components/BookingForm/BookingForm'
+import Schedule from './components/Schedule/Schedule'
 import './App.css'
 
 function App() {
-  // Estado central - array de agendamentos
   const [appointments, setAppointments] = useState([])
+  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0])
 
-  // Adicionar agendamento (imutabilidade com spread operator)
   const handleAddAppointment = (newAppointment) => {
     setAppointments(prevAppointments => [
       ...prevAppointments,
@@ -19,43 +18,39 @@ function App() {
     ])
   }
 
-  // Remover agendamento (imutabilidade com filter)
   const handleDeleteAppointment = (id) => {
     setAppointments(prevAppointments =>
       prevAppointments.filter(appointment => appointment.id !== id)
     )
   }
 
+  // Filtrar agendamentos pela data selecionada
+  const filteredAppointments = appointments.filter(
+    appointment => appointment.date === selectedDate
+  )
+
+  // Horários já ocupados na data selecionada
+  const bookedTimes = filteredAppointments.map(apt => apt.time)
+
   return (
     <div className="app">
-      <Header
-        title="HairDay"
-        subtitle="Gerencie seus agendamentos de forma simples"
-      />
+      <Header />
 
-      <main className="container">
-        <section className="section">
-          <h2 className="section-title">Novo Agendamento</h2>
-          <AppointmentForm onAddAppointment={handleAddAppointment} />
-        </section>
+      <main className="main-content">
+        <BookingForm
+          onAddAppointment={handleAddAppointment}
+          selectedDate={selectedDate}
+          onDateChange={setSelectedDate}
+          bookedTimes={bookedTimes}
+        />
 
-        <section className="section">
-          <h2 className="section-title">
-            Agendamentos
-            {appointments.length > 0 && (
-              <span className="count-badge">{appointments.length}</span>
-            )}
-          </h2>
-          <AppointmentList
-            appointments={appointments}
-            onDeleteAppointment={handleDeleteAppointment}
-          />
-        </section>
+        <Schedule
+          appointments={filteredAppointments}
+          onDeleteAppointment={handleDeleteAppointment}
+          selectedDate={selectedDate}
+          onDateChange={setSelectedDate}
+        />
       </main>
-
-      <footer className="footer">
-        <p>HairDay &copy; {new Date().getFullYear()} - Desafio React Rocketseat</p>
-      </footer>
     </div>
   )
 }
